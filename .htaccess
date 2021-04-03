@@ -1,0 +1,190 @@
+## CACHE KODUNU BUNUN ALTINA EKLEYEBILIRSINIZ ##
+
+## GZIP KODUNU BUNUN ALTINA EKLEYEBILIRSINIZ ##
+
+Options +SymLinksIfOwnerMatch
+RewriteEngine On
+RewriteBase /
+
+## WWW YÖNLENDİRME KODUNU BUNUN ALTINA EKLEYEBILIRSINIZ ##
+
+## SECURITY ##
+<FilesMatch "\.(ini|log|sh|sql|htaccess)">
+	Order Allow,Deny
+	Deny from All
+</FilesMatch>
+RewriteRule (^|/)(apps/main|apps/dashboard|apps/install|apps/update)/private(/|$) - [F]
+
+## ROBOTS.TXT ##
+RewriteRule ^robots.txt(/?)$ /robots.php [L]
+
+## SITEMAP.XML ##
+RewriteRule ^sitemap.xml(/?)$ /sitemap.php [L]
+
+## ERRORS ##
+ErrorDocument 404 /apps/main/index.php?route=404
+ErrorDocument 403 /apps/main/index.php?route=404
+
+## INSTALL ##
+RewriteRule ^kurulum(/?)$ /apps/install/index.php [L]
+
+## MAIN ##
+RewriteRule ^(/?)$ /apps/main/index.php?route=home [L]
+RewriteRule ^kurallar(/?)$ /apps/main/index.php?route=rules [L]
+RewriteRule ^indir(/?)$ /apps/main/index.php?route=download [L]
+RewriteRule ^indir/([0-9]+)/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=download&id=$1&file=$2 [L]
+RewriteRule ^oyuncu/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=player&id=$1 [QSA,L]
+RewriteRule ^profil(/?)$ /apps/main/index.php?route=profile&target=profile&action=get [QSA,L]
+RewriteRule ^profil/duzenle(/?)$ /apps/main/index.php?route=profile&target=profile&action=update [L]
+RewriteRule ^profil/sifre-degistir(/?)$ /apps/main/index.php?route=profile&target=profile&action=change-password [L]
+RewriteRule ^giris-yap(/?)$ /apps/main/index.php?route=login [L]
+RewriteRule ^kayit-ol(/?)$ /apps/main/index.php?route=register [L]
+RewriteRule ^sifremi-unuttum(/?)$ /apps/main/index.php?route=recover [L]
+RewriteRule ^sifremi-unuttum/([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=recover&id=$1&token=$2 [L]
+RewriteRule ^cikis-yap(/?)$ /apps/main/index.php?route=logout [L]
+RewriteRule ^kredi/yukle(/?)$ /apps/main/index.php?route=credit&target=credit&action=charge [L]
+RewriteRule ^kredi/yukle/basarili(/?)$ /apps/main/index.php?route=credit&target=credit&action=alert&result=success [L]
+RewriteRule ^kredi/yukle/basarisiz(/?)$ /apps/main/index.php?route=credit&target=credit&action=alert&result=unsuccess [L]
+
+RewriteRule ^odeme/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=credit&target=credit&action=pay&api=$1 [L]
+
+RewriteRule ^islem/batihost/mobil(/?)$ /apps/main/public/ajax/process.php?api=batihost&type=1 [L]
+RewriteRule ^islem/batihost/kredi-karti(/?)$ /apps/main/public/ajax/process.php?api=batihost&type=2 [L]
+RewriteRule ^islem/paywant(/?)$ /apps/main/public/ajax/process.php?api=paywant [L]
+RewriteRule ^islem/rabisu/mobil(/?)$ /apps/main/public/ajax/process.php?api=rabisu&type=1 [L]
+RewriteRule ^islem/rabisu/kredi-karti(/?)$ /apps/main/public/ajax/process.php?api=rabisu&type=2 [L]
+RewriteRule ^islem/shopier(/?)$ /apps/main/public/ajax/process.php?api=shopier [L]
+RewriteRule ^islem/keyubu/mobil(/?)$ /apps/main/public/ajax/process.php?api=keyubu&type=1 [L]
+RewriteRule ^islem/keyubu/kredi-karti(/?)$ /apps/main/public/ajax/process.php?api=keyubu&type=2 [L]
+RewriteRule ^islem/shipy(/?)$ /apps/main/public/ajax/process.php?api=shipy [L]
+RewriteRule ^islem/slimmweb(/?)$ /apps/main/public/ajax/process.php?api=slimmweb [L]
+RewriteRule ^islem/paytr(/?)$ /apps/main/public/ajax/process.php?api=paytr [L]
+RewriteRule ^islem/paylith(/?)$ /apps/main/public/ajax/process.php?api=paylith [L]
+
+RewriteRule ^siralama(/?)$ /apps/main/index.php?route=leaderboards [L]
+RewriteRule ^siralama/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=leaderboards&server=$1 [L]
+RewriteRule ^magaza(/?)$ /apps/main/index.php?route=store&action=getAll [L]
+RewriteRule ^magaza/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=store&action=get&server=$1 [L]
+RewriteRule ^magaza/([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=store&action=get&server=$1&category=$2 [L]
+
+RewriteRule ^destek(/?)$ /apps/main/index.php?route=support&target=support&action=getAll [L]
+RewriteRule ^destek/gonder(/?)$ /apps/main/index.php?route=support&target=support&action=insert [L]
+RewriteRule ^destek/goruntule/([0-9]+)(/?)$ /apps/main/index.php?route=support&target=support&action=get&id=$1 [L]
+RewriteRule ^destek/sil/([0-9]+)(/?)$ /apps/main/index.php?route=support&target=support&action=delete&id=$1 [L]
+
+RewriteRule ^haberler/([0-9]+)(/?)$ /apps/main/index.php?route=home&page=$1 [L]
+RewriteRule ^kategori/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=home&category=$1 [L]
+RewriteRule ^kategori/([0-9a-zA-Z-_]+)/([0-9]+)(/?)$ /apps/main/index.php?route=home&category=$1&page=$2 [L]
+RewriteRule ^etiket/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=home&tag=$1 [L]
+RewriteRule ^etiket/([0-9a-zA-Z-_]+)/([0-9]+)(/?)$ /apps/main/index.php?route=home&tag=$1&page=$2 [L]
+RewriteRule ^haber/([0-9]+)/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=news&id=$1 [L]
+RewriteRule ^sayfa/([0-9]+)/([0-9a-zA-Z-_]+)(/?)$ /apps/main/index.php?route=page&id=$1 [L]
+
+RewriteRule ^apps/main/public/assets/css/edits/color.css(/?)$ /apps/main/public/assets/css/edits/color.css.php [L]
+
+RewriteRule ^bakim(/?)$ /apps/main/index.php?route=maintenance [L]
+
+RewriteRule ^404(/?)$ /apps/main/index.php?route=404 [L]
+
+## DASHBOARD ##
+RewriteRule ^yonetim-paneli(/?)$ /apps/dashboard/index.php?route=home [L]
+RewriteRule ^yonetim-paneli/hata/([0-9]+)(/?)$ /apps/dashboard/index.php?route=home&alert=$1 [L]
+
+RewriteRule ^yonetim-paneli/guncelleme(/?)$ /apps/dashboard/index.php?route=update [L]
+
+RewriteRule ^yonetim-paneli/haber(/?)$ /apps/dashboard/index.php?route=news&target=news&action=getAll [L]
+RewriteRule ^yonetim-paneli/haber/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=news&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/haber/ekle(/?)$ /apps/dashboard/index.php?route=news&target=news&action=insert [L]
+RewriteRule ^yonetim-paneli/haber/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=news&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/haber/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=news&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/haber/kategori(/?)$ /apps/dashboard/index.php?route=news&target=category&action=getAll [L]
+RewriteRule ^yonetim-paneli/haber/kategori/ekle(/?)$ /apps/dashboard/index.php?route=news&target=category&action=insert [L]
+RewriteRule ^yonetim-paneli/haber/kategori/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=category&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/haber/kategori/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=category&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/haber/yorum(/?)$ /apps/dashboard/index.php?route=news&target=comment&action=getAll [L]
+RewriteRule ^yonetim-paneli/haber/yorum/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=comment&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/haber/yorum/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=comment&action=get&id=$1 [L]
+RewriteRule ^yonetim-paneli/haber/yorum/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=news&target=comment&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/sunucu(/?)$ /apps/dashboard/index.php?route=server&target=server&action=getAll [L]
+RewriteRule ^yonetim-paneli/sunucu/ekle(/?)$ /apps/dashboard/index.php?route=server&target=server&action=insert [L]
+RewriteRule ^yonetim-paneli/sunucu/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=server&target=server&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/sunucu/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=server&target=server&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/magaza/urun(/?)$ /apps/dashboard/index.php?route=store&target=product&action=getAll [L]
+RewriteRule ^yonetim-paneli/magaza/urun/ekle(/?)$ /apps/dashboard/index.php?route=store&target=product&action=insert [L]
+RewriteRule ^yonetim-paneli/magaza/urun/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=product&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/urun/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=product&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/magaza/kategori(/?)$ /apps/dashboard/index.php?route=store&target=category&action=getAll [L]
+RewriteRule ^yonetim-paneli/magaza/kategori/ekle(/?)$ /apps/dashboard/index.php?route=store&target=category&action=insert [L]
+RewriteRule ^yonetim-paneli/magaza/kategori/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=category&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/kategori/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=category&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/magaza/kredi/gonder(/?)$ /apps/dashboard/index.php?route=store&target=credit&action=send [L]
+RewriteRule ^yonetim-paneli/magaza/kredi/gonder/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=credit&action=send&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/magaza/kredi-yukleme-gecmisi(/?)$ /apps/dashboard/index.php?route=store&target=credit-charge-history&action=getAll [L]
+RewriteRule ^yonetim-paneli/magaza/kredi-yukleme-gecmisi/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=credit-charge-history&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/kredi-yukleme-gecmisi/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=credit-charge-history&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/kredi-kullanim-gecmisi(/?)$ /apps/dashboard/index.php?route=store&target=credit-usage-history&action=getAll [L]
+RewriteRule ^yonetim-paneli/magaza/kredi-kullanim-gecmisi/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=credit-usage-history&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/kredi-kullanim-gecmisi/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=credit-usage-history&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/magaza-gecmisi(/?)$ /apps/dashboard/index.php?route=store&target=store-history&action=getAll [L]
+RewriteRule ^yonetim-paneli/magaza/magaza-gecmisi/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=store-history&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/magaza/magaza-gecmisi/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=store&target=store-history&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/hesap(/?)$ /apps/dashboard/index.php?route=account&target=account&action=getAll [L]
+RewriteRule ^yonetim-paneli/hesap/([0-9]+)(/?)$ /apps/dashboard/index.php?route=account&target=account&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/hesap/ekle(/?)$ /apps/dashboard/index.php?route=account&target=account&action=insert [L]
+RewriteRule ^yonetim-paneli/hesap/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=account&target=account&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/hesap/goruntule/([0-9a-zA-Z-_]+)(/?)$ /apps/dashboard/index.php?route=account&target=account&action=get&id=$1 [QSA,L]
+RewriteRule ^yonetim-paneli/hesap/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=account&target=account&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/hesap/yetkili(/?)$ /apps/dashboard/index.php?route=account&target=authorized&action=getAll [L]
+RewriteRule ^yonetim-paneli/hesap/yetkili/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=account&target=authorized&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/destek(/?)$ /apps/dashboard/index.php?route=support&target=support&action=getAll [L]
+RewriteRule ^yonetim-paneli/destek/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/destek/yanit-bekleyen(/?)$ /apps/dashboard/index.php?route=support&target=support&category=unread&action=getAll [L]
+RewriteRule ^yonetim-paneli/destek/yanit-bekleyen/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&category=unread&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/destek/yanitli(/?)$ /apps/dashboard/index.php?route=support&target=support&category=readed&action=getAll [L]
+RewriteRule ^yonetim-paneli/destek/yanitli/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&category=readed&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/destek/kapali(/?)$ /apps/dashboard/index.php?route=support&target=support&category=closed&action=getAll [L]
+RewriteRule ^yonetim-paneli/destek/kapali/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&category=closed&action=getAll&page=$1 [L]
+RewriteRule ^yonetim-paneli/destek/goruntule/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&action=get&id=$1 [L]
+RewriteRule ^yonetim-paneli/destek/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/destek/toplu-sil(/?)$ /apps/dashboard/index.php?route=support&target=support&action=delete-selected [L]
+RewriteRule ^yonetim-paneli/destek/kapat/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=support&action=close&id=$1 [L]
+RewriteRule ^yonetim-paneli/destek/kategori(/?)$ /apps/dashboard/index.php?route=support&target=category&action=getAll [L]
+RewriteRule ^yonetim-paneli/destek/kategori/ekle(/?)$ /apps/dashboard/index.php?route=support&target=category&action=insert [L]
+RewriteRule ^yonetim-paneli/destek/kategori/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=category&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/destek/kategori/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=support&target=category&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/siralama(/?)$ /apps/dashboard/index.php?route=leaderboards&target=leaderboards&action=getAll [L]
+RewriteRule ^yonetim-paneli/siralama/ekle(/?)$ /apps/dashboard/index.php?route=leaderboards&target=leaderboards&action=insert [L]
+RewriteRule ^yonetim-paneli/siralama/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=leaderboards&target=leaderboards&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/siralama/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=leaderboards&target=leaderboards&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/sayfa(/?)$ /apps/dashboard/index.php?route=page&target=page&action=getAll [L]
+RewriteRule ^yonetim-paneli/sayfa/ekle(/?)$ /apps/dashboard/index.php?route=page&target=page&action=insert [L]
+RewriteRule ^yonetim-paneli/sayfa/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=page&target=page&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/sayfa/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=page&target=page&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/indir(/?)$ /apps/dashboard/index.php?route=download&target=download&action=getAll [L]
+RewriteRule ^yonetim-paneli/indir/ekle(/?)$ /apps/dashboard/index.php?route=download&target=download&action=insert [L]
+RewriteRule ^yonetim-paneli/indir/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=download&target=download&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/indir/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=download&target=download&action=delete&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/odeme(/?)$ /apps/dashboard/index.php?route=payment&target=payment&action=getAll [L]
+RewriteRule ^yonetim-paneli/odeme/ekle(/?)$ /apps/dashboard/index.php?route=payment&target=payment&action=insert [L]
+RewriteRule ^yonetim-paneli/odeme/duzenle/([0-9]+)(/?)$ /apps/dashboard/index.php?route=payment&target=payment&action=update&id=$1 [L]
+RewriteRule ^yonetim-paneli/odeme/sil/([0-9]+)(/?)$ /apps/dashboard/index.php?route=payment&target=payment&action=delete&id=$1 [L]
+RewriteRule ^yonetim-paneli/odeme/ayarlar(/?)$ /apps/dashboard/index.php?route=payment&target=settings&action=getAll [L]
+RewriteRule ^yonetim-paneli/odeme/ayarlar/duzenle/([0-9a-zA-Z-_]+)(/?)$ /apps/dashboard/index.php?route=payment&target=settings&action=update&id=$1 [L]
+
+RewriteRule ^yonetim-paneli/tema/header(/?)$ /apps/dashboard/index.php?route=theme&target=header&action=update [L]
+
+RewriteRule ^yonetim-paneli/ayarlar/genel(/?)$ /apps/dashboard/index.php?route=settings&target=general&action=update [L]
+RewriteRule ^yonetim-paneli/ayarlar/sistem(/?)$ /apps/dashboard/index.php?route=settings&target=system&action=update [L]
+RewriteRule ^yonetim-paneli/ayarlar/smtp(/?)$ /apps/dashboard/index.php?route=settings&target=smtp&action=update [L]
+RewriteRule ^yonetim-paneli/ayarlar/dil(/?)$ /apps/dashboard/index.php?route=settings&target=language&action=update [L]
